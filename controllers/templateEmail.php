@@ -1,3 +1,4 @@
+<?php ?>
 <div>
-    <h1>Email de Teste</h1>
+    <b>Email de Teste</b>
 </div>
