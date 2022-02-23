@@ -1,8 +1,6 @@
 <?php
-include 'config.php';
-
-$conexao = conectarBanco($ipAcesso, $loginBanco, $senhaBanco, $base);
-adicionarDados($conexao);
+require 'config.php';
+include 'mailer.php';
 
 function conectarBanco($ipAcesso, $loginBanco, $senhaBanco, $base)
 {
@@ -15,22 +13,17 @@ function conectarBanco($ipAcesso, $loginBanco, $senhaBanco, $base)
     return $conexao;
 }
 
-function tratarDados($info)
+function adicionarDados($nome, $email, $conexao)
 {
-    $info = preg_replace('/[^[:alnum:]_]/', '', $info);
-    return $info;
-}
-
-function adicionarDados($conexao)
-{
-    $nome = $_POST['nome'];
-    $email = $_POST['email'];
-
-    $nome = tratarDados($nome);
-    $email = tratarDados($email);
-
     $query = $conexao->prepare('INSERT INTO usuarios(nome, email) VALUES (?, ?);');
     $query->bind_param('ss', $nome, $email);
 
     $query->execute();
 }
+
+$nome = $_POST['nome'];
+$email = $_POST['email'];
+
+$conexao = conectarBanco($ipAcesso, $loginBanco, $senhaBanco, $base);
+adicionarDados($nome, $email, $conexao);
+enviarEmail($nome, $email);

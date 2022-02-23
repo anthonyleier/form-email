@@ -16,7 +16,7 @@
             <div class="col-md-6 text-center">
                 <h1>Formulário</h1>
                 <div class="text-left">
-                    <form method="POST" action="controller.php">
+                    <form method="POST" action="./controllers/form.php">
                         <div class="form-group">
                             <label for="Nome">Nome Completo</label>
                             <input type="text" class="form-control" id="nome" placeholder="João Maria" name="nome" required>
