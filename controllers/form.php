@@ -15,9 +15,9 @@ function conectarBanco($ipAcesso, $loginBanco, $senhaBanco, $base)
 
 function adicionarDados($nome, $email, $conexao)
 {
-    $query = $conexao->prepare('INSERT INTO usuarios(nome, email) VALUES (?, ?);');
+    $query = $conexao->prepare('INSERT INTO usuarios (nome, email) VALUES (?, ?);');
     $query->bind_param('ss', $nome, $email);
-
+    
     $query->execute();
 }
 
@@ -26,4 +26,4 @@ $email = $_POST['email'];
 
 $conexao = conectarBanco($ipAcesso, $loginBanco, $senhaBanco, $base);
 adicionarDados($nome, $email, $conexao);
-enviarEmail($nome, $email);
+enviarEmail($email);

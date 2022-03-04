@@ -3,34 +3,36 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require '../vendor/autoload.php';
+require 'vendor/autoload.php';
 
-function enviarEmail($emailDestino, $nomeDestino)
+function enviarEmail($emailDestino)
 {
+    include 'templateEmail.php';
     require 'config.php';
     $mail = new PHPMailer(true);
-    $corpoEmail = file_get_contents('templateEmail.php');
 
     try {
         $mail->isSMTP();
+        $mail->CharSet = "UTF-8";
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
         $mail->Username = $emailCliente;
         $mail->Password = $senhaCliente;
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port = 587;
-
-        $mail->setFrom($emailCliente, $nomeCliente);
-        $mail->addAddress($emailDestino, $nomeDestino);
-
+    
+        $mail->setFrom($emailCliente);
+        $mail->addAddress($emailDestino);
+    
         $mail->isHTML(true);
-        $mail->Subject = 'Mensagem da Empresa'; // Assunto personalizável do cliente
+        $mail->Subject = 'Simpe Soluções Gerenciais';
         $mail->Body = $corpoEmail;
-        $mail->AltBody = $corpoEmail;
-
-        $mail->send();
-
-        header("Location: index.php");
+    
+        if($mail->send()) {
+            echo 'Email enviado com sucesso';
+        } else {
+            echo 'Email nao enviado';
+        }
+        header('Location: index.php');
         die();
     } catch (Exception $e) {
         echo "A mensagem não foi enviada. Erro: {$mail->ErrorInfo}";
