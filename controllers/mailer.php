@@ -5,9 +5,9 @@ use PHPMailer\PHPMailer\Exception;
 
 require 'vendor/autoload.php';
 
-function enviarEmail($emailDestino)
+function enviarEmail($emailDestino, $nomeDestino)
 {
-    include 'templateEmail.php';
+    include 'email.php';
     require 'config.php';
     $mail = new PHPMailer(true);
 
@@ -16,17 +16,17 @@ function enviarEmail($emailDestino)
         $mail->CharSet = "UTF-8";
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = $emailCliente;
-        $mail->Password = $senhaCliente;
+        $mail->Username = $servicoEmail;
+        $mail->Password = $servicoSenha;
         $mail->Port = 587;
     
         $mail->setFrom($emailCliente);
         $mail->addAddress($emailDestino);
     
         $mail->isHTML(true);
-        $mail->Subject = 'Simpe Soluções Gerenciais';
+        $mail->Subject = $nomeCliente;
         $mail->Body = $corpoEmail;
-    
+        
         if($mail->send()) {
             echo 'Email enviado com sucesso';
         } else {

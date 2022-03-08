@@ -26,4 +26,4 @@ $email = $_POST['email'];
 
 $conexao = conectarBanco($ipAcesso, $loginBanco, $senhaBanco, $base);
 adicionarDados($nome, $email, $conexao);
-enviarEmail($email);
+enviarEmail($email, $nome);
